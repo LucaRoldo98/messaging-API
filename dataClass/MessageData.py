@@ -1,7 +1,7 @@
 from uuid import UUID
 from datetime import datetime
 
-class MessageDTO:
+class MessageData:
     def __init__(self, id: UUID, sender: str, recipient: str, message: str, timestamp: datetime, is_fetched: bool):
         self.id = id
         self.recipient = recipient

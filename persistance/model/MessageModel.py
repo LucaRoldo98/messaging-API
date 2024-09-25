@@ -1,11 +1,9 @@
 from sqlalchemy import Column, UUID, String, Boolean, DateTime, Text
-from sqlalchemy.ext.declarative import declarative_base
+from config.database import Base
 from datetime import datetime
 import uuid
 
-Base = declarative_base()
-
-class Message(Base):
+class MessageModel(Base):
     __tablename__ = "messages"
     
     id = Column(UUID, default=uuid.uuid4, nullable=False, primary_key=True, index=True)
