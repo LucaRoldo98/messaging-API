@@ -10,7 +10,7 @@ from datetime import datetime
 class SQLRepository(IRepository):
     session: Session
     
-    def __init__(self, session: Session = Depends(get_db_session())):
+    def __init__(self, session: Session = Depends(get_db_session)):
         self.session = session
         
     def addMessage(self, message: MessageData) -> Optional[MessageData]:
@@ -33,14 +33,29 @@ class SQLRepository(IRepository):
             ).all()
         return [self._messageModelToData(msg) for msg in db_messages]
     
-    def getMessages(self, startTime: Optional[datetime], stopTime: Optional[datetime]) -> List[MessageData]:
-        query = self.session.query(MessageModel)
-        if startTime:
-            query = query.filter(MessageModel.timestamp >= startTime)
-        if stopTime:
-            query = query.filter(MessageModel.timestamp <= stopTime)
+    def getMessages(self, stopIndex: Optional[int], startIndex: Optional[int] = 0) -> List[MessageData]:
         
-        db_messages = query.all()
+        if stopIndex is None:
+            db_messages = (
+                self.session.query(MessageModel)
+                .order_by(MessageModel.timestamp)
+                .offset(startIndex)
+                .all()
+            )
+        else:
+            if startIndex < 0 or stopIndex <= startIndex:
+                return []
+
+            limit = stopIndex - startIndex
+
+            db_messages = (
+                self.session.query(MessageModel)
+                .order_by(MessageModel.timestamp)
+                .offset(startIndex)
+                .limit(limit)
+                .all()
+            )
+
         return [self._messageModelToData(msg) for msg in db_messages]
 
     def markMessagesAsRead(self, messagesID: List[int]) -> List[MessageData]:

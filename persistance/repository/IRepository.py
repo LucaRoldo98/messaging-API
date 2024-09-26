@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 from dataClass.MessageData import MessageData
 from typing import List, Optional
-from datetime import datetime
 
 class IRepository(ABC):
     @abstractmethod
@@ -21,7 +20,7 @@ class IRepository(ABC):
         raise NotImplementedError
     
     @abstractmethod
-    def getMessages(self, startTime: Optional[datetime], stopTime: Optional[datetime]) -> List[MessageData]:
+    def getMessages(self, startIndex: int, stopIndex: int) -> List[MessageData]:
         """
         Fetches messages within the given time range.
         The startTime and stopTime can be omitted, to remove the lower and higher bounds, respectively.
