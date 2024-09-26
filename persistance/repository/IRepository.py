@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 from dataClass.MessageData import MessageData
 from typing import List, Optional
-
 class IRepository(ABC):
     @abstractmethod
     def addMessage(self, message: MessageData) -> Optional[MessageData]:
@@ -29,7 +28,7 @@ class IRepository(ABC):
         raise NotImplementedError
     
     @abstractmethod
-    def markMessagesAsRead(self, messagesID: List[int]) -> List[MessageData]:
+    def markMessagesAsRead(self, messagesID: List[str]) -> List[MessageData]:
         """
         Marks the messages with the given IDs as read.
         Returns the updated messages, or an empty list if no messages were updated.
@@ -37,7 +36,7 @@ class IRepository(ABC):
         raise NotImplementedError
     
     @abstractmethod
-    def deleteMessages(self, messagesID: List[int]) -> None:
+    def deleteMessages(self, messagesID: List[str]) -> None:
         """
         Deletes the given messages.
         """

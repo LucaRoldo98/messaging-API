@@ -5,7 +5,6 @@ from fastapi import Depends
 from config.database import get_db_session
 from dataClass.MessageData import MessageData
 from typing import Optional, List
-from datetime import datetime
 
 class SQLRepository(IRepository):
     session: Session
@@ -58,7 +57,7 @@ class SQLRepository(IRepository):
 
         return [self._messageModelToData(msg) for msg in db_messages]
 
-    def markMessagesAsRead(self, messagesID: List[int]) -> List[MessageData]:
+    def markMessagesAsRead(self, messagesID: List[str]) -> List[MessageData]:
         db_messages = self.session.query(MessageModel).filter(
             MessageModel.id.in_(messagesID)
         ).all()
@@ -72,7 +71,7 @@ class SQLRepository(IRepository):
         self.session.commit()
         return [self._messageModelToData(msg) for msg in db_messages]
 
-    def deleteMessages(self, messagesID: List[int]) -> None:
+    def deleteMessages(self, messagesID: List[str]) -> None:
         self.session.query(MessageModel).filter(MessageModel.id.in_(messagesID)).delete(synchronize_session=False)
         self.session.commit()
         

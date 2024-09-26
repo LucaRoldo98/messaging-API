@@ -1,4 +1,3 @@
-from uuid import UUID
 from datetime import datetime
 from typing import Optional
 
@@ -7,7 +6,7 @@ class MessageData:
                  sender: str,
                  recipient: str,
                  message: str,
-                 id: Optional[int] = None,
+                 id: Optional[str] = None,
                  timestamp: Optional[datetime] = None,
                  is_fetched: Optional[bool] = False):
 
