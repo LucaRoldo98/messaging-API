@@ -29,7 +29,7 @@ class SQLRepository(IRepository):
     def getUnreadMessages(self, user: str) -> List[MessageData]:
         db_messages = self.session.query(MessageModel).filter(
             MessageModel.recipient == user, MessageModel.is_fetched == False
-            ).all()
+            ).order_by(MessageModel.timestamp).all()
         return [self._messageModelToData(msg) for msg in db_messages]
     
     def getMessages(self, user: str, stopIndex: Optional[int], startIndex: Optional[int]) -> List[MessageData]:
