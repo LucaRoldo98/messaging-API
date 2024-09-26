@@ -13,3 +13,7 @@ def get_db_session():
         yield session
     finally:
         session.close()
+        
+def init_db():
+    Base.metadata.create_all(engine)
+    

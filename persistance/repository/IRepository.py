@@ -11,7 +11,7 @@ class IRepository(ABC):
         raise NotImplementedError
     
     @abstractmethod
-    def getUnreadMessagesByUser(self, user: str) -> List[MessageData]:
+    def getUnreadMessages(self, user: str) -> List[MessageData]:
         """
         Fetches unread messages for the recipient.
         Returns an empty list if no unread messages are found.

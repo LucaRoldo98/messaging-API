@@ -26,17 +26,18 @@ class SQLRepository(IRepository):
             self.session.rollback()
             return 
         
-    def getUnreadMessagesByUser(self, user: str) -> List[MessageData]:
+    def getUnreadMessages(self, user: str) -> List[MessageData]:
         db_messages = self.session.query(MessageModel).filter(
             MessageModel.recipient == user, MessageModel.is_fetched == False
             ).all()
         return [self._messageModelToData(msg) for msg in db_messages]
     
-    def getMessages(self, stopIndex: Optional[int], startIndex: Optional[int] = 0) -> List[MessageData]:
+    def getMessages(self, user: str, stopIndex: Optional[int], startIndex: Optional[int]) -> List[MessageData]:
         
         if stopIndex is None:
             db_messages = (
                 self.session.query(MessageModel)
+                .filter(MessageModel.recipient == user)
                 .order_by(MessageModel.timestamp)
                 .offset(startIndex)
                 .all()
@@ -49,6 +50,7 @@ class SQLRepository(IRepository):
 
             db_messages = (
                 self.session.query(MessageModel)
+                .filter(MessageModel.recipient == user)
                 .order_by(MessageModel.timestamp)
                 .offset(startIndex)
                 .limit(limit)

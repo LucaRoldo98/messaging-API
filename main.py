@@ -2,8 +2,7 @@ from sqlalchemy.orm import Session
 from config.database import SessionLocal
 from persistance.repository.SQLRepository import SQLRepository
 from dataClass.MessageData import MessageData
-import datetime
-from config.database import Base, engine
+from config.database import init_db
 
 def get_db_session():
     db = SessionLocal()
@@ -21,7 +20,7 @@ def test_repository():
     new_message = MessageData(
         sender="Alice",
         recipient="Bob",
-        message="Hello, Bob!"
+        message="Hello, Man!"
     )
 
     # Add the message to the repository
@@ -30,7 +29,7 @@ def test_repository():
 
     # Fetch unread messages for Bob
     print("Fetching unread messages for Bob:")
-    unread_messages = repository.getUnreadMessagesByUser("Bob")
+    unread_messages = repository.getUnreadMessages("Bob")
     for msg in unread_messages:
         print(msg.message)
 
@@ -40,7 +39,7 @@ def test_repository():
 
     # Fetch the same messages to verify they've been marked as read
     print("Fetching updated messages for Bob:")
-    updated_messages = repository.getUnreadMessagesByUser("Bob")
+    updated_messages = repository.getUnreadMessages("Bob")
     if not updated_messages:
         print("No unread messages found (messages have been marked as read).")
         
@@ -55,5 +54,5 @@ def test_repository():
     repository.deleteMessages([new_message.id])
 
 if __name__ == "__main__":
-    Base.metadata.create_all(engine)
+    init_db()
     test_repository()
