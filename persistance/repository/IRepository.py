@@ -2,7 +2,6 @@ from abc import ABC, abstractmethod
 from dataClass.MessageData import MessageData
 from typing import List, Optional
 from datetime import datetime
-from uuid import UUID
 
 class IRepository(ABC):
     @abstractmethod
@@ -14,33 +13,34 @@ class IRepository(ABC):
         raise NotImplementedError
     
     @abstractmethod
-    def getNewMessages(self, user: str) -> List[MessageData]:
+    def getUnreadMessagesByUser(self, user: str) -> List[MessageData]:
         """
-        Fetches new messages for the recipient.
-        Returns an empty list if no new messages are found.
-        """
-        raise NotImplementedError
-    
-    @abstractmethod
-    def updateMessages(self, ) -> List[MessageData]:
-        """
-        Fetches new messages for the recipient.
-        Returns an empty list if no new messages are found.
+        Fetches unread messages for the recipient.
+        Returns an empty list if no unread messages are found.
         """
         raise NotImplementedError
     
     @abstractmethod
-    def getMessages(self, startTime: datetime, stopTime: datetime) -> List[MessageData]:
+    def getMessages(self, startTime: Optional[datetime], stopTime: Optional[datetime]) -> List[MessageData]:
         """
         Fetches messages within the given time range.
+        The startTime and stopTime can be omitted, to remove the lower and higher bounds, respectively.
         Returns an empty list if no messages are found.
         """
         raise NotImplementedError
     
     @abstractmethod
-    def deleteMessages(self, messagesId : List[UUID]) -> None:
+    def markMessagesAsRead(self, messagesID: List[int]) -> List[MessageData]:
         """
-        Deletes messages with the given UUIDs.
+        Marks the messages with the given IDs as read.
+        Returns the updated messages, or an empty list if no messages were updated.
+        """
+        raise NotImplementedError
+    
+    @abstractmethod
+    def deleteMessages(self, messagesID: List[int]) -> None:
+        """
+        Deletes the given messages.
         """
         raise NotImplementedError
     

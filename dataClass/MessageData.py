@@ -2,7 +2,7 @@ from uuid import UUID
 from datetime import datetime
 
 class MessageData:
-    def __init__(self, id: UUID, sender: str, recipient: str, message: str, timestamp: datetime, is_fetched: bool):
+    def __init__(self, id: int, sender: str, recipient: str, message: str, timestamp: datetime, is_fetched: bool):
         self.id = id
         self.recipient = recipient
         self.sender = sender
