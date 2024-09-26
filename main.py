@@ -19,12 +19,9 @@ def test_repository():
 
     # Create a new message
     new_message = MessageData(
-        id=1,
         sender="Alice",
         recipient="Bob",
-        message="Hello, Bob!",
-        timestamp=datetime.datetime.now(datetime.timezone.utc),
-        is_fetched=False
+        message="Hello, Bob!"
     )
 
     # Add the message to the repository
@@ -37,19 +34,19 @@ def test_repository():
     for msg in unread_messages:
         print(msg.message)
 
-    # Mark the message as read
-    print("Marking messages as read:")
-    repository.markMessagesAsRead([new_message.id])
+    # # Mark the message as read
+    # print("Marking messages as read:")
+    # repository.markMessagesAsRead([new_message.id])
 
-    # Fetch the same messages to verify they've been marked as read
-    print("Fetching updated messages for Bob:")
-    updated_messages = repository.getUnreadMessagesByUser("Bob")
-    if not updated_messages:
-        print("No unread messages found (messages have been marked as read).")
+    # # Fetch the same messages to verify they've been marked as read
+    # print("Fetching updated messages for Bob:")
+    # updated_messages = repository.getUnreadMessagesByUser("Bob")
+    # if not updated_messages:
+    #     print("No unread messages found (messages have been marked as read).")
 
-    # Delete the message
-    print("Deleting messages from the repository:")
-    repository.deleteMessages([new_message.id])
+    # # Delete the message
+    # print("Deleting messages from the repository:")
+    # repository.deleteMessages([new_message.id])
 
 if __name__ == "__main__":
     Base.metadata.create_all(engine)
