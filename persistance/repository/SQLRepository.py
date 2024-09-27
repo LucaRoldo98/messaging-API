@@ -1,15 +1,13 @@
 from persistance.repository.IRepository import IRepository
 from persistance.model.MessageModel import MessageModel
 from sqlalchemy.orm import Session
-from fastapi import Depends
-from config.database import get_db_session
 from dataClasses.MessageData import MessageData
 from typing import Optional, List
 
 class SQLRepository(IRepository):
     session: Session
     
-    def __init__(self, session: Session = Depends(get_db_session)):
+    def __init__(self, session: Session):
         self.session = session
         
     def addMessage(self, message: MessageData) -> Optional[MessageData]:

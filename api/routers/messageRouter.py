@@ -7,7 +7,7 @@ from api.schemas.MessageSchemas import MessageSchema, MessagePostRequestSchema, 
 messageRouter = APIRouter(prefix="/messages")
 
 @messageRouter.post("/", response_model=MessageSchema, status_code=status.HTTP_201_CREATED)
-async def submitMessage(message: MessagePostRequestSchema, service: MessageService = Depends()):
+async def submit_message(message: MessagePostRequestSchema, service: MessageService = Depends()):
     try:
         return service.submitMessage(MessageData(**message.model_dump()))
     except ValueError as e:
@@ -16,7 +16,7 @@ async def submitMessage(message: MessagePostRequestSchema, service: MessageServi
         raise HTTPException(status_code=500, detail=str(e))
 
 @messageRouter.get("/unread/{user}", response_model=List[MessageSchema])
-async def getUnreadMessages(user: str, service: MessageService = Depends()):
+async def get_unread_messages(user: str, service: MessageService = Depends()):
     return service.getUnreadMessages(user)
 
 @messageRouter.get("/{user}", response_model=List[MessageSchema])

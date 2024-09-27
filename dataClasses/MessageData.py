@@ -19,10 +19,10 @@ class MessageData:
         
     def __repr__(self) -> str:
         return (
-            f"Message with id={self.id}, 
+            f"""Message with id={self.id}, 
             sender={self.sender}, 
             recipient={self.recipient}, 
             message={self.message}, 
             timestamp={self.timestamp}, 
-            is_fetched={self.is_fetched}"
+            is_fetched={self.is_fetched}"""
         )

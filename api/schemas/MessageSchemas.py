@@ -1,17 +1,15 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 from datetime import datetime
 from typing import List
 
 class MessageSchema(BaseModel):
-    id : str
-    recipient : EmailStr
-    sender : EmailStr
+    recipient : str
+    sender : str
     message : str
-    timestamp : datetime
 
 class MessagePostRequestSchema(BaseModel):
-    recipient : EmailStr
-    sender : EmailStr
+    recipient : str
+    sender : str
     message : str
     
 class MessagesDeleteRequestSchema(BaseModel):
