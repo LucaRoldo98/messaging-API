@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from config.database import SessionLocal
 from persistance.repository.SQLRepository import SQLRepository
-from dataClass.MessageData import MessageData
+from dataClasses.MessageData import MessageData
 from config.database import init_db
 from services.MessageService import MessageService
 

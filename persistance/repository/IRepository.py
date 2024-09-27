@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from dataClass.MessageData import MessageData
+from dataClasses.MessageData import MessageData
 from typing import List, Optional
 class IRepository(ABC):
     @abstractmethod

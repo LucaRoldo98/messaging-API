@@ -1,6 +1,6 @@
 from persistance.repository.IRepository import IRepository
 from fastapi import Depends
-from dataClass.MessageData import MessageData
+from dataClasses.MessageData import MessageData
 from typing import Optional, List
 
 class MessageService: 
@@ -11,6 +11,7 @@ class MessageService:
         
     def submitMessage(self, message: MessageData) -> Optional[MessageData]:
         if not message.sender or not message.recipient or message.message:
+            print(message)
             raise ValueError("Sender, recipient and message are required")
         savedMessage = self._messageRepository.addMessage(message)
         if not savedMessage:

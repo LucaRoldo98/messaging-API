@@ -3,7 +3,7 @@ from persistance.model.MessageModel import MessageModel
 from sqlalchemy.orm import Session
 from fastapi import Depends
 from config.database import get_db_session
-from dataClass.MessageData import MessageData
+from dataClasses.MessageData import MessageData
 from typing import Optional, List
 
 class SQLRepository(IRepository):
