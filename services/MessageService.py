@@ -10,11 +10,17 @@ class MessageService:
         self._messageRepository = repository
         
     def submitMessage(self, message: MessageData) -> Optional[MessageData]:
-        return self._messageRepository.addMessage(message)
+        if not message.sender or not message.recipient or message.message:
+            raise ValueError("Sender, recipient and message are required")
+        savedMessage = self._messageRepository.addMessage(message)
+        if not savedMessage:
+            raise RuntimeError(f"Failed to submit the message {message}.")
+        return savedMessage
     
     def getUnreadMessages(self, user: str) ->  List[MessageData]:
         messages = self._messageRepository.getUnreadMessages(user)
-        self._messageRepository.markMessagesAsRead([msg.id for msg in messages])
+        if messages:
+            self._messageRepository.markMessagesAsRead([msg.id for msg in messages])
         return messages
     
     def getMessages(self, user: str, startIndex: Optional[int], stopIndex: Optional[int]) -> List[MessageData]:
