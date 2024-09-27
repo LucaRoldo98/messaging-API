@@ -9,7 +9,7 @@ class MessageService:
     def __init__(self, repository: IRepository = Depends()):
         self._messageRepository = repository
         
-    def submitMessage(self, message: MessageData) -> Optional[MessageData]:
+    def submitMessage(self, message: MessageData) -> MessageData:
         if not message.sender or not message.recipient or not message.message:
             raise ValueError("Sender, recipient and message are required")
         savedMessage = self._messageRepository.addMessage(message)
