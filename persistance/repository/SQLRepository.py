@@ -26,27 +26,15 @@ class SQLRepository(IRepository):
             ).order_by(MessageModel.timestamp).all()
         return [self._messageModelToData(msg) for msg in db_messages]
     
-    def getMessages(self, user: str, stopIndex: Optional[int], startIndex: Optional[int]) -> List[MessageData]:
-        if stopIndex is None:
-            db_messages = (
-                self.session.query(MessageModel)
-                .filter(MessageModel.recipient == user)
-                .order_by(MessageModel.timestamp)
-                .offset(startIndex)
-                .all()
-            )
-        elif startIndex < 0 or stopIndex <= startIndex:
-            return []
-        else:
-            limit = stopIndex - startIndex
-            db_messages = (
-                self.session.query(MessageModel)
-                .filter(MessageModel.recipient == user)
-                .order_by(MessageModel.timestamp)
-                .offset(startIndex)
-                .limit(limit)
-                .all()
-            )
+    def getMessages(self, user: str, startIndex: Optional[int], stopIndex: Optional[int]) -> List[MessageData]:
+        query = self.session.query(MessageModel).filter(MessageModel.recipient == user).order_by(MessageModel.timestamp)
+        if startIndex is not None:
+            query = query.offset(startIndex)
+        if stopIndex is not None:
+            limit = stopIndex - (startIndex if startIndex is not None else 0)
+            query = query.limit(limit)
+
+        db_messages = query.all()
         return [self._messageModelToData(msg) for msg in db_messages]
 
     def markMessagesAsRead(self, messagesID: List[str]) -> List[MessageData]:
