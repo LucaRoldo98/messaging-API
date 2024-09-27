@@ -19,7 +19,7 @@ async def submit_message(message: MessagePostRequestSchema, service: MessageServ
 @messageRouter.get("/unread/{user}", response_model=List[MessageResponseSchema])
 async def get_unread_messages(user: str, service: MessageService = Depends()):
     messageData = service.getUnreadMessages(user)
-    return messageDataToSchema(messageData)
+    return [messageDataToSchema(msg) for msg in messageData]
 
 @messageRouter.get("/{user}", response_model=List[MessageResponseSchema])
 async def get_messages(user: str, startIndex: int = 0, stopIndex: int = None, service: MessageService = Depends()):
