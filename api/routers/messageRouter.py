@@ -1,15 +1,16 @@
 from fastapi import APIRouter, HTTPException, Depends, status
-from typing import List, Optional
+from typing import List
 from services.MessageService import MessageService
 from dataClasses.MessageData import MessageData
-from api.schemas.MessageSchemas import MessageSchema, MessagePostRequestSchema, MessagesDeleteRequestSchema
+from api.schemas.MessageSchemas import MessageSchema, MessagePostRequestSchema, MessagesDeleteRequestSchema, messageDataToSchema
 
 messageRouter = APIRouter(prefix="/messages")
 
 @messageRouter.post("/", response_model=MessageSchema, status_code=status.HTTP_201_CREATED)
 async def submit_message(message: MessagePostRequestSchema, service: MessageService = Depends()):
     try:
-        return service.submitMessage(MessageData(**message.model_dump()))
+        message_data = service.submitMessage(MessageData(**message.model_dump()))
+        return messageDataToSchema(message_data)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except RuntimeError as e:

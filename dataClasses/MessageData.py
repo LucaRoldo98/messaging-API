@@ -2,6 +2,12 @@ from datetime import datetime
 from typing import Optional
 
 class MessageData:
+    """
+    Represents a message in the messaging service.
+    This class is decoupled from the controller and repository layers,
+    allowing for clean data handling throughout the application.
+    """
+    
     def __init__(self,
                  sender: str,
                  recipient: str,

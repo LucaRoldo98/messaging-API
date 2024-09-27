@@ -1,7 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-# URL_DATABASE = 'mysql+pymysql://root:rootroot@localhost:3306/MessageApplication'
 URL_DATABASE = 'sqlite:///./messages.db'
 
 engine = create_engine(URL_DATABASE)
