@@ -2,7 +2,7 @@ from persistance.repository.IUserRepository import IUserRepository
 from persistance.models.models import UserModel
 from sqlalchemy.orm import Session
 from dataClasses.UserData import UserData
-from typing import Optional, List
+from typing import Optional
 
 class SQLUserRepository(IUserRepository):
     session: Session
@@ -23,17 +23,15 @@ class SQLUserRepository(IUserRepository):
         
     def get(self, userID: str) -> Optional[UserData]:
         db_user = self.session.query(UserModel).filter(UserModel.id == userID).first()
-        
         if db_user is None:
             return None
-        
         return self._userModelToData(db_user)
-
+            
     def update(self, userID: str, newEmail: str) -> UserData:
         db_user = self.session.query(UserModel).filter(
             UserModel.id == userID
         ).first()
-        
+                
         if db_user is None:
             return None
         

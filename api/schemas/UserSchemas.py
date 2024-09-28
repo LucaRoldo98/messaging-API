@@ -7,7 +7,7 @@ class UserResponseSchema(BaseModel):
     id: str
     email: EmailStr
         
-class DeleteResponseSchema(BaseModel):
+class UserDeleteResponseSchema(BaseModel):
     detail : str
 
 def userDataToSchema(user_data) -> UserResponseSchema:

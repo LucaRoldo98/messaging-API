@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from typing import List
 from services.UserService import UserService
 from dataClasses.UserData import UserData
-from api.schemas.UserSchemas import UserResponseSchema, UserCreateSchema, DeleteResponseSchema, userDataToSchema
+from api.schemas.UserSchemas import UserResponseSchema, UserCreateSchema, UserDeleteResponseSchema, userDataToSchema
 
 userRouter = APIRouter(prefix="/users")
 
@@ -20,9 +20,16 @@ async def get_user(userID: str, service: UserService = Depends()):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with ID {userID} does not exist")
     return userDataToSchema(user)
 
-@userRouter.delete("/{userID}", response_model=DeleteResponseSchema)
+@userRouter.get("/{userID}/unread", response_model=UserResponseSchema)
+async def get_unread_messages(userID: str, service: UserService = Depends()):
+    user = service.getUser(userID)
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with ID {userID} does not exist")
+    return userDataToSchema(user)
+
+@userRouter.delete("/{userID}", response_model=UserDeleteResponseSchema)
 async def delete_user(userID: str, service: UserService = Depends()):
     deleted_count = service.deleteUser(userID)
     if deleted_count == 0:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with ID {userID} does not exist")
-    return DeleteResponseSchema(detail="User deleted successfully")
+    return UserDeleteResponseSchema(detail="User deleted successfully")

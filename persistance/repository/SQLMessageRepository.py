@@ -3,6 +3,7 @@ from persistance.models.models import MessageModel
 from sqlalchemy.orm import Session
 from dataClasses.MessageData import MessageData
 from typing import Optional, List
+from persistance.models.models import UserModel
 
 class SQLMessageRepository(IUserRepository):
     session: Session
@@ -12,8 +13,8 @@ class SQLMessageRepository(IUserRepository):
         
     def create(self, message: MessageData) -> MessageData:
         db_message = MessageModel(
-            sender = message.sender,
-            recipient = message.recipient,
+            sender_id = message.sender,
+            recipient_id = message.recipient,
             message = message.message
             )
         self.session.add(db_message)
@@ -58,9 +59,12 @@ class SQLMessageRepository(IUserRepository):
         return deletedCount
     
     def _messageModelToData(self, message: MessageModel) -> MessageData:
+        sender = message.sender.id if message.sender else None
+        recipient = message.recipient.id if message.recipient else None
+        
         return MessageData(
-            sender=message.sender,
-            recipient=message.recipient,
+            sender=sender,
+            recipient=recipient,
             message=message.message,
             id=message.id,
             timestamp=message.timestamp,
