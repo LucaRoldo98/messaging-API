@@ -5,7 +5,7 @@ import uuid
 class MessageModel(Base):
     __tablename__ = "messages"
     
-    id = Column(String, default=lambda: uuid.uuid4().hex, nullable=False, primary_key=True, index=True)
+    id = Column(String(128), default=lambda: uuid.uuid4().hex, nullable=False, primary_key=True, index=True)
     sender = Column(String(100))
     recipient = Column(String(100))
     message = Column(Text)
