@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
 from dataClasses.MessageData import MessageData
 from typing import List, Optional
-class IRepository(ABC):
+
+class IUserRepository(ABC):
     @abstractmethod
     def create(self, message: MessageData) -> MessageData:
         """

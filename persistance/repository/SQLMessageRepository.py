@@ -1,10 +1,10 @@
-from persistance.repository.IRepository import IRepository
+from persistance.repository.IMessageRepository import IUserRepository
 from persistance.model.MessageModel import MessageModel
 from sqlalchemy.orm import Session
 from dataClasses.MessageData import MessageData
 from typing import Optional, List
 
-class SQLRepository(IRepository):
+class SQLMessageRepository(IUserRepository):
     session: Session
     
     def __init__(self, session: Session):

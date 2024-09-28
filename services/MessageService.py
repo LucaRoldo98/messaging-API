@@ -1,13 +1,12 @@
-from persistance.repository.IRepository import IRepository
-from persistance.repository.SQLRepository import SQLRepository
+from persistance.repository.IMessageRepository import IUserRepository
 from fastapi import Depends
 from dataClasses.MessageData import MessageData
 from typing import Optional, List
-from config.dependencies import get_repository
+from config.dependencies import get_message_repository
 class MessageService: 
-    _messageRepository: IRepository
+    _messageRepository: IUserRepository
     
-    def __init__(self, repository: IRepository = Depends(get_repository)):
+    def __init__(self, repository: IUserRepository = Depends(get_message_repository)):
         self._messageRepository = repository
         
     def submitMessage(self, message: MessageData) -> MessageData:
