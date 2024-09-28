@@ -19,8 +19,6 @@ async def get_unread_messages(user: str, service: MessageService = Depends()):
 @messageRouter.get("/{user}", response_model=List[MessageResponseSchema])
 async def get_messages(user: str, startIndex: int = 0, stopIndex: int = None, service: MessageService = Depends()):
     messages = service.getMessages(user, startIndex, stopIndex)
-    if messages is None:
-        raise HTTPException(status_code=404, detail="No messages found.")
     return [messageDataToSchema(msg) for msg in messages]
 
 @messageRouter.delete("/{messageID}")
@@ -30,8 +28,5 @@ async def delete_message(messageID: str, service: MessageService = Depends()):
 
 @messageRouter.delete("/")
 async def delete_messages(requestBody: MessagesDeleteRequestSchema, service: MessageService = Depends()):
-    if not requestBody:
-        raise HTTPException(status_code=400, detail="No message IDs provided.")
-    
     service.deleteMessages(requestBody.messagesID)
     return {"detail": "Messages deleted successfully"}
