@@ -1,5 +1,5 @@
 from persistance.repository.IUserRepository import IUserRepository
-from persistance.model.UserModel import UserModel
+from persistance.models.models import UserModel
 from sqlalchemy.orm import Session
 from dataClasses.UserData import UserData
 from typing import Optional, List
