@@ -10,7 +10,7 @@ class SQLRepository(IRepository):
     def __init__(self, session: Session):
         self.session = session
         
-    def addMessage(self, message: MessageData) -> MessageData:
+    def create(self, message: MessageData) -> MessageData:
         db_message = MessageModel(
             sender = message.sender,
             recipient = message.recipient,
@@ -20,16 +20,15 @@ class SQLRepository(IRepository):
         self.session.commit()
         return self._messageModelToData(db_message)
         
-    def getUnreadMessages(self, user: str) -> List[MessageData]:
-        db_messages = self.session.query(MessageModel).filter(
-            MessageModel.recipient == user, MessageModel.is_fetched == False
-            ).order_by(MessageModel.timestamp).all()
-        return [self._messageModelToData(msg) for msg in db_messages]
-    
-    def getMessages(self, user: str, startIndex: Optional[int], stopIndex: Optional[int]) -> List[MessageData]:
-        query = self.session.query(MessageModel).filter(MessageModel.recipient == user).order_by(MessageModel.timestamp)
+    def get(self, user: str, isFetched: Optional[bool] = None, startIndex: Optional[int] = None, stopIndex: Optional[int] = None) -> List[MessageData]:
+        query = self.session.query(MessageModel).filter(MessageModel.recipient == user).order_by(MessageModel.timestamp.desc())
+        
+        if isFetched is not None:
+            query = query.filter(MessageModel.is_fetched == isFetched)
+
         if startIndex is not None:
             query = query.offset(startIndex)
+
         if stopIndex is not None:
             limit = stopIndex - (startIndex if startIndex is not None else 0)
             query = query.limit(limit)
@@ -37,19 +36,24 @@ class SQLRepository(IRepository):
         db_messages = query.all()
         return [self._messageModelToData(msg) for msg in db_messages]
 
-    def markMessagesAsRead(self, messagesID: List[str]) -> List[MessageData]:
+    def update(self, messagesID: List[str], newFetchedStatus: bool) -> List[MessageData]:
         db_messages = self.session.query(MessageModel).filter(
             MessageModel.id.in_(messagesID)
         ).all()
+        
         if not db_messages:
             return []
-        for db_message in db_messages:
-            db_message.is_fetched = True
+        
+        if newFetchedStatus is not None:
+            for db_message in db_messages:
+                db_message.is_fetched = newFetchedStatus
+                
         self.session.commit()
         return [self._messageModelToData(msg) for msg in db_messages]
 
-    def deleteMessages(self, messagesID: List[str]) -> None:
-        self.session.query(MessageModel).filter(MessageModel.id.in_(messagesID)).delete(synchronize_session=False)
+
+    def delete(self, messagesID: List[str]) -> None:
+        self.session.query(MessageModel).filter(MessageModel.id.in_(messagesID)).delete()
         self.session.commit()
     
     def _messageModelToData(self, message: MessageModel) -> MessageData:

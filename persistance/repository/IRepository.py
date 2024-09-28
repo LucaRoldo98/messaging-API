@@ -3,40 +3,37 @@ from dataClasses.MessageData import MessageData
 from typing import List, Optional
 class IRepository(ABC):
     @abstractmethod
-    def addMessage(self, message: MessageData) -> Optional[MessageData]:
+    def create(self, message: MessageData) -> MessageData:
         """
         Adds a message to the repository.
-        Returns the added message, or None if failed.
+        Returns the added message.
         """
         raise NotImplementedError
     
     @abstractmethod
-    def getUnreadMessages(self, user: str) -> List[MessageData]:
+    def get(self, user: str, isFetched: Optional[bool], startIndex: Optional[int], stopIndex: Optional[int]) -> List[MessageData]:
         """
-        Fetches unread messages for the recipient.
-        Returns an empty list if no unread messages are found.
-        """
-        raise NotImplementedError
-    
-    @abstractmethod
-    def getMessages(self, startIndex: int, stopIndex: int) -> List[MessageData]:
-        """
-        Fetches messages within the given time range.
-        The startTime and stopTime can be omitted, to remove the lower and higher bounds, respectively.
+        Gets messages for given user, sorted by descending timestamp.
+        The method can take some optional filters:
+        - isFetched: Get only messages with the speficified fetched status.
+        - startIndex: Get results starting from specified index. Default value is 0.
+        - stopIndex: Get results up to the specified index. 
         Returns an empty list if no messages are found.
         """
         raise NotImplementedError
     
     @abstractmethod
-    def markMessagesAsRead(self, messagesID: List[str]) -> List[MessageData]:
+    def update(self, messagesID: List[str], newFetchedStatus: bool) -> List[MessageData]:
         """
-        Marks the messages with the given IDs as read.
+        Update the messages with the given IDs.
+        Updates can be done on the following fields:
+        - is_fetched, according to the value specified in newFetchedStatus
         Returns the updated messages, or an empty list if no messages were updated.
         """
         raise NotImplementedError
     
     @abstractmethod
-    def deleteMessages(self, messagesID: List[str]) -> None:
+    def delete(self, messagesID: List[str]) -> None:
         """
         Deletes the given messages.
         """

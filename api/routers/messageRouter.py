@@ -8,13 +8,8 @@ messageRouter = APIRouter(prefix="/messages")
 
 @messageRouter.post("/", response_model=MessageResponseSchema, status_code=status.HTTP_201_CREATED)
 async def submit_message(message: MessagePostRequestSchema, service: MessageService = Depends()):
-    try:
-        messageData = service.submitMessage(MessageData(**message.model_dump()))
-        return messageDataToSchema(messageData)
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    except RuntimeError as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    messageData = service.submitMessage(MessageData(**message.model_dump()))
+    return messageDataToSchema(messageData)
 
 @messageRouter.get("/unread/{user}", response_model=List[MessageResponseSchema])
 async def get_unread_messages(user: str, service: MessageService = Depends()):
