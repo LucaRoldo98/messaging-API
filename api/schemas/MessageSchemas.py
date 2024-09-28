@@ -18,6 +18,9 @@ class MessagePostRequestSchema(BaseModel):
 class MessagesDeleteRequestSchema(BaseModel):
     messagesID: List[str]
 
+class DeleteResponseSchema(BaseModel):
+    detail : str
+
 def messageDataToSchema(messageData: MessageData) -> MessageResponseSchema:
     return MessageResponseSchema(
             id=messageData.id,

@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from typing import List
 from services.MessageService import MessageService
 from dataClasses.MessageData import MessageData
-from api.schemas.MessageSchemas import MessageResponseSchema, MessagePostRequestSchema, MessagesDeleteRequestSchema, messageDataToSchema
+from api.schemas.MessageSchemas import MessageResponseSchema, MessagePostRequestSchema, MessagesDeleteRequestSchema, DeleteResponseSchema, messageDataToSchema
 
 messageRouter = APIRouter(prefix="/messages")
 
@@ -21,12 +21,12 @@ async def get_messages(user: str, startIndex: int = 0, stopIndex: int = None, se
     messages = service.getMessages(user, startIndex, stopIndex)
     return [messageDataToSchema(msg) for msg in messages]
 
-@messageRouter.delete("/{messageID}")
+@messageRouter.delete("/{messageID}", response_model=DeleteResponseSchema)
 async def delete_message(messageID: str, service: MessageService = Depends()):
     service.deleteMessage(messageID)
-    return {"detail": "Message deleted successfully"}
+    return DeleteResponseSchema(detail="Message deleted successfully")
 
-@messageRouter.delete("/")
+@messageRouter.delete("/", response_model=DeleteResponseSchema)
 async def delete_messages(requestBody: MessagesDeleteRequestSchema, service: MessageService = Depends()):
     service.deleteMessages(requestBody.messagesID)
-    return {"detail": "Messages deleted successfully"}
+    return DeleteResponseSchema(detail="Messages deleted successfully")
