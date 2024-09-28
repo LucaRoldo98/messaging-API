@@ -27,10 +27,14 @@ async def get_messages(user: str, startIndex: int = 0, stopIndex: int = None, se
 
 @messageRouter.delete("/{messageID}", response_model=DeleteResponseSchema)
 async def delete_message(messageID: str, service: MessageService = Depends()):
-    service.deleteMessage(messageID)
+    deletedCount = service.deleteMessage(messageID)
+    if deletedCount == 0:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Message with ID {messageID} does not exist")
     return DeleteResponseSchema(detail="Message deleted successfully")
 
 @messageRouter.delete("/", response_model=DeleteResponseSchema)
 async def delete_messages(requestBody: MessagesDeleteRequestSchema, service: MessageService = Depends()):
-    service.deleteMessages(requestBody.messagesID)
-    return DeleteResponseSchema(detail="Messages deleted successfully")
+    deletedCount = service.deleteMessages(requestBody.messagesID)
+    if deletedCount == 0: 
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No message found")
+    return DeleteResponseSchema(detail=f"{deletedCount} messages deleted successfully")

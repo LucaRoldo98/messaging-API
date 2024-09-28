@@ -52,10 +52,10 @@ class SQLRepository(IRepository):
         return [self._messageModelToData(msg) for msg in db_messages]
 
 
-    def delete(self, messagesID: List[str]) -> None:
-        messages = self.session.query(MessageModel).filter(MessageModel.id.in_(messagesID))
-        messages.delete()
+    def delete(self, messagesID: List[str]) -> int:
+        deletedCount = self.session.query(MessageModel).filter(MessageModel.id.in_(messagesID)).delete()
         self.session.commit()
+        return deletedCount
     
     def _messageModelToData(self, message: MessageModel) -> MessageData:
         return MessageData(

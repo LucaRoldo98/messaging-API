@@ -27,13 +27,13 @@ class IRepository(ABC):
         """
         Update the messages with the given IDs.
         Updates can be done on the following fields:
-        - is_fetched, according to the value specified in newFetchedStatus
+        - is_fetched, according to the value sp§ecified in newFetchedStatus
         Returns the updated messages, or an empty list if no messages were updated.
         """
         raise NotImplementedError
     
     @abstractmethod
-    def delete(self, messagesID: List[str]) -> None:
+    def delete(self, messagesID: List[str]) -> int:
         """
         Deletes the given messages.
         """
