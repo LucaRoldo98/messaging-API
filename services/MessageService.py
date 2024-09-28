@@ -10,8 +10,7 @@ class MessageService:
         self._messageRepository = repository
         
     def submitMessage(self, message: MessageData) -> MessageData:
-        savedMessage = self._messageRepository.create(message)
-        return savedMessage
+        return self._messageRepository.create(message)
     
     def getUnreadMessages(self, user: str) ->  List[MessageData]:
         messages = self._messageRepository.get(user, isFetched=False)

@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from typing import List
 from services.MessageService import MessageService
 from dataClasses.MessageData import MessageData
-from api.schemas.MessageSchemas import MessageResponseSchema, MessagePostRequestSchema, MessagesDeleteRequestSchema, DeleteResponseSchema, messageDataToSchema
+from api.schemas.MessageSchemas import MessageResponseSchema, MessagePostRequestSchema, MessagesDeleteRequestSchema, MessagesDeleteResponseSchema, messageDataToSchema
 
 messageRouter = APIRouter(prefix="/messages")
 
@@ -25,16 +25,16 @@ async def get_messages(user: str, startIndex: int = 0, stopIndex: int = None, se
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User {user} does not exist")
     return [messageDataToSchema(msg) for msg in messages]
 
-@messageRouter.delete("/{messageID}", response_model=DeleteResponseSchema)
+@messageRouter.delete("/{messageID}", response_model=MessagesDeleteResponseSchema)
 async def delete_message(messageID: str, service: MessageService = Depends()):
     deletedCount = service.deleteMessage(messageID)
     if deletedCount == 0:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Message with ID {messageID} does not exist")
-    return DeleteResponseSchema(detail="Message deleted successfully")
+    return MessagesDeleteResponseSchema(detail="Message deleted successfully")
 
-@messageRouter.delete("/", response_model=DeleteResponseSchema)
+@messageRouter.delete("/", response_model=MessagesDeleteResponseSchema)
 async def delete_messages(requestBody: MessagesDeleteRequestSchema, service: MessageService = Depends()):
     deletedCount = service.deleteMessages(requestBody.messagesID)
     if deletedCount == 0: 
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No messages with specified IDs found")
-    return DeleteResponseSchema(detail=f"{deletedCount} messages deleted successfully")
+    return MessagesDeleteResponseSchema(detail=f"{deletedCount} messages deleted successfully")
