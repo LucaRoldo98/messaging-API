@@ -14,7 +14,7 @@ class SQLRepository(IRepository):
         db_message = MessageModel(
             sender = message.sender,
             recipient = message.recipient,
-            message = message.message
+            text = message.text
             )
         self.session.add(db_message)
         self.session.commit()
@@ -61,7 +61,7 @@ class SQLRepository(IRepository):
         return MessageData(
             sender=message.sender,
             recipient=message.recipient,
-            message=message.message,
+            text=message.text,
             id=message.id,
             timestamp=message.timestamp,
             is_fetched=message.is_fetched

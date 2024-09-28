@@ -8,6 +8,6 @@ class MessageModel(Base):
     id = Column(String(128), default=lambda: uuid.uuid4().hex, nullable=False, primary_key=True, index=True)
     sender = Column(String(100))
     recipient = Column(String(100))
-    message = Column(Text)
+    text = Column(Text)
     timestamp = Column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
     is_fetched = Column(Boolean, default=False)

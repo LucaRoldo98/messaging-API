@@ -11,7 +11,7 @@ class MessageData:
     def __init__(self,
                  sender: str,
                  recipient: str,
-                 message: str,
+                 text: str,
                  id: Optional[str] = None,
                  timestamp: Optional[datetime] = None,
                  is_fetched: Optional[bool] = False):
@@ -19,7 +19,7 @@ class MessageData:
         self.id = id
         self.recipient = recipient
         self.sender = sender
-        self.message = message
+        self.text = text
         self.timestamp = timestamp
         self.is_fetched = is_fetched
         
@@ -28,7 +28,7 @@ class MessageData:
             f"""Message with id={self.id}, 
             sender={self.sender}, 
             recipient={self.recipient}, 
-            message={self.message}, 
+            text={self.text}, 
             timestamp={self.timestamp}, 
             is_fetched={self.is_fetched}"""
         )
