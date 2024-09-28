@@ -1,5 +1,4 @@
 from persistance.repository.IRepository import IRepository
-from persistance.repository.SQLRepository import SQLRepository
 from fastapi import Depends
 from dataClasses.MessageData import MessageData
 from typing import Optional, List

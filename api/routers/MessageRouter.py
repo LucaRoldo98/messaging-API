@@ -36,5 +36,5 @@ async def delete_message(messageID: str, service: MessageService = Depends()):
 async def delete_messages(requestBody: MessagesDeleteRequestSchema, service: MessageService = Depends()):
     deletedCount = service.deleteMessages(requestBody.messagesID)
     if deletedCount == 0: 
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No message found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No messages with specified IDs found")
     return DeleteResponseSchema(detail=f"{deletedCount} messages deleted successfully")

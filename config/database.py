@@ -6,13 +6,6 @@ URL_DATABASE = 'sqlite:///./messages.db'
 engine = create_engine(URL_DATABASE)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
-
-def get_db_session():
-    session = SessionLocal()
-    try:
-        yield session
-    finally:
-        session.close()
         
 def init_db():
     Base.metadata.create_all(engine)
