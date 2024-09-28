@@ -39,7 +39,7 @@ class SQLUserRepository(IUserRepository):
         return self._userModelToData(db_user)
 
 
-    def delete(self, userID: List[str]) -> int:
+    def delete(self, userID: str) -> int:
         db_user = self.session.query(UserModel).filter(UserModel.id == userID).delete()
         if db_user == 0:
             return False
