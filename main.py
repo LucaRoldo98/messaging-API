@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 from api.routers.MessageRouter import messageRouter
+from api.routers.UserRouter import userRouter
 from config.database import init_db
 import uvicorn
 
 app = FastAPI()
 app.include_router(messageRouter)
+app.include_router(userRouter)
 
 @app.get("/")
 async def health_check():

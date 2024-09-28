@@ -10,7 +10,10 @@ class SQLUserRepository(IUserRepository):
     def __init__(self, session: Session):
         self.session = session
         
-    def create(self, user: UserData) -> UserData:
+    def create(self, user: UserData) -> Optional[UserData]:
+        existing_user = self.session.query(UserModel).filter_by(email=user.email).first()
+        if existing_user:
+            return None
         db_user = UserModel(
             email = user.email
             )

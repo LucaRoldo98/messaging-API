@@ -1,10 +1,10 @@
 from persistance.repository.IUserRepository import IUserRepository
 from fastapi import Depends
 from dataClasses.UserData import UserData
-from typing import Optional, List
+from typing import Optional
 from config.dependencies import get_user_repository
 
-class MessageService: 
+class UserService: 
     _userRepository: IUserRepository
     
     def __init__(self, repository: IUserRepository = Depends(get_user_repository)):
