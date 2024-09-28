@@ -1,5 +1,6 @@
 from sqlalchemy import Column, String, Boolean, DateTime, Text
 from config.database import Base
+from dataClasses.MessageData import MessageData
 import datetime
 import uuid
 class MessageModel(Base):
@@ -11,3 +12,11 @@ class MessageModel(Base):
     text = Column(Text)
     timestamp = Column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
     is_fetched = Column(Boolean, default=False)
+    
+    def toData(self):
+        return MessageData(id=self.id, 
+                           sender=self.sender, 
+                           recipient=self.recipient, 
+                           text=self.text, 
+                           timestamp=self.timestamp,
+                           is_fetched=self.is_fetched)
