@@ -13,12 +13,16 @@ async def submit_message(message: MessagePostRequestSchema, service: MessageServ
 
 @messageRouter.get("/unread/{user}", response_model=List[MessageResponseSchema])
 async def get_unread_messages(user: str, service: MessageService = Depends()):
-    messageData = service.getUnreadMessages(user)
-    return [messageDataToSchema(msg) for msg in messageData]
+    messages = service.getUnreadMessages(user)
+    if messages is None: 
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User {user} does not exist")
+    return [messageDataToSchema(msg) for msg in messages]
 
 @messageRouter.get("/{user}", response_model=List[MessageResponseSchema])
 async def get_messages(user: str, startIndex: int = 0, stopIndex: int = None, service: MessageService = Depends()):
     messages = service.getMessages(user, startIndex, stopIndex)
+    if messages is None: 
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User {user} does not exist")
     return [messageDataToSchema(msg) for msg in messages]
 
 @messageRouter.delete("/{messageID}", response_model=DeleteResponseSchema)

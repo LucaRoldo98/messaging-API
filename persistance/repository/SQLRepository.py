@@ -20,8 +20,11 @@ class SQLRepository(IRepository):
         self.session.commit()
         return self._messageModelToData(db_message)
         
-    def get(self, user: str, isFetched: Optional[bool] = None, startIndex: Optional[int] = None, stopIndex: Optional[int] = None) -> List[MessageData]:
+    def get(self, user: str, isFetched: Optional[bool] = None, startIndex: Optional[int] = None, stopIndex: Optional[int] = None) -> Optional[List[MessageData]]:
         query = self.session.query(MessageModel).filter(MessageModel.recipient == user).order_by(MessageModel.timestamp.desc())
+        
+        if query.first() is None:
+            return None
         
         if isFetched is not None:
             query = query.filter(MessageModel.is_fetched == isFetched)
@@ -41,9 +44,6 @@ class SQLRepository(IRepository):
             MessageModel.id.in_(messagesID)
         ).all()
         
-        if not db_messages:
-            return []
-        
         if newFetchedStatus is not None:
             for db_message in db_messages:
                 db_message.is_fetched = newFetchedStatus
@@ -53,7 +53,8 @@ class SQLRepository(IRepository):
 
 
     def delete(self, messagesID: List[str]) -> None:
-        self.session.query(MessageModel).filter(MessageModel.id.in_(messagesID)).delete()
+        messages = self.session.query(MessageModel).filter(MessageModel.id.in_(messagesID))
+        messages.delete()
         self.session.commit()
     
     def _messageModelToData(self, message: MessageModel) -> MessageData:

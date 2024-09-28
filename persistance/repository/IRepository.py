@@ -11,7 +11,7 @@ class IRepository(ABC):
         raise NotImplementedError
     
     @abstractmethod
-    def get(self, user: str, isFetched: Optional[bool], startIndex: Optional[int], stopIndex: Optional[int]) -> List[MessageData]:
+    def get(self, user: str, isFetched: Optional[bool], startIndex: Optional[int], stopIndex: Optional[int]) -> Optional[List[MessageData]]:
         """
         Gets messages for given user, sorted by descending timestamp.
         The method can take some optional filters:
