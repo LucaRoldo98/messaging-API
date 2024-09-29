@@ -22,7 +22,7 @@ async def get_unread_messages(userID: str, service: MessageService = Depends()):
 
 @messageRouter.get("/{userID}", response_model=List[MessageResponseSchema])
 async def get_messages(userID: str, startIndex: int = 0, stopIndex: int = None, service: MessageService = Depends()):
-    if startIndex < 0 or stopIndex <= startIndex:
+    if startIndex < 0 or (stopIndex is not None and stopIndex <= startIndex):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Start and stop indexes must be non negative and stop index must be greater than start index.")
     messages = service.getMessages(userID, startIndex, stopIndex)
     if messages is None: 
