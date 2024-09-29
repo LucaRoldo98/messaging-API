@@ -1,8 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends, status
 from services.UserService import UserService
 from dataClasses.UserData import UserData
-from api.schemas.UserSchemas import UserResponseSchema, UserCreateSchema, UserDeleteResponseSchema, userDataToSchema
-from typing import Optional
+from api.schemas.UserSchemas import *
 
 userRouter = APIRouter(prefix="/user")
 
@@ -25,7 +24,6 @@ async def get_user(email: str, service: UserService = Depends()):
     user = service.getUserByEmail(email)
     if user is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with email {email} does not exist")
-    
     return userDataToSchema(user)
 
 @userRouter.delete("/{userID}", response_model=UserDeleteResponseSchema)

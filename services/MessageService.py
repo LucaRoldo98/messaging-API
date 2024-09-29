@@ -36,6 +36,7 @@ class MessageService:
     
     def getMessages(self, userID: str, startIndex: Optional[int], stopIndex: Optional[int]) -> List[MessageData]:
         receivedMessages = self._userRepository.getReceivedMessages(userID)
+        
         if receivedMessages is None:
             return None
         
@@ -48,8 +49,8 @@ class MessageService:
         self._messageRepository.update([msg.id for msg in receivedMessages], newFetchedStatus=True)
         return receivedMessages
             
-    def deleteMessage(self, messageID: str):
+    def deleteMessage(self, messageID: str) -> int:
         return self._messageRepository.delete([messageID])
     
-    def deleteMessages(self, messagesID: List[str]):
+    def deleteMessages(self, messagesID: List[str]) -> int:
         return self._messageRepository.delete(messagesID)

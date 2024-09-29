@@ -46,8 +46,8 @@ class SQLMessageRepository(IMessageRepository):
         
         if newFetchedStatus is not None:
             for db_message in db_messages:
-                db_message.is_fetched = newFetchedStatus
-                
+                db_message.is_fetched = newFetchedStatus    
+                          
         self.session.commit()
         return [msg.toData() for msg in db_messages]
 

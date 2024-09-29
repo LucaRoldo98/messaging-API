@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from typing import List
 from services.MessageService import MessageService
 from dataClasses.MessageData import MessageData
-from api.schemas.MessageSchemas import MessageResponseSchema, MessagePostRequestSchema, MessagesDeleteRequestSchema, MessageDeleteResponseSchema, messageDataToSchema
+from api.schemas.MessageSchemas import *
 
 messageRouter = APIRouter(prefix="/messages")
 
@@ -38,5 +38,5 @@ async def delete_message(messageID: str, service: MessageService = Depends()):
 async def delete_messages(requestBody: MessagesDeleteRequestSchema, service: MessageService = Depends()):
     deletedCount = service.deleteMessages(requestBody.messagesID)
     if deletedCount == 0: 
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No message found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="None of the specified messages were found")
     return MessageDeleteResponseSchema(detail=f"{deletedCount} messages deleted successfully")

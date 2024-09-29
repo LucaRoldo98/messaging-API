@@ -19,5 +19,5 @@ class UserService:
     def getUserByEmail(self, email: str) -> Optional[UserData]:
         return self._userRepository.getByEmail(email)
                 
-    def deleteUser(self, userID: str):
+    def deleteUser(self, userID: str) -> bool:
         return self._userRepository.delete(userID)

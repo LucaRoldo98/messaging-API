@@ -18,7 +18,7 @@ class MessageModel(Base):
     sender = relationship("UserModel", foreign_keys=[sender_id], back_populates="sent_messages")
     recipient = relationship("UserModel", foreign_keys=[recipient_id], back_populates="received_messages")
     
-    def toData(self):
+    def toData(self) -> MessageData:
         return MessageData(id=self.id, 
                            sender=self.sender_id, 
                            recipient=self.recipient_id, 

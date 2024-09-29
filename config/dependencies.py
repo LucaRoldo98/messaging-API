@@ -13,7 +13,7 @@ def get_db_session():
     finally:
         session.close()
 
-def get_message_repository(session: Session = Depends(get_db_session)) -> IUserRepository:
+def get_message_repository(session: Session = Depends(get_db_session)) -> IMessageRepository:
     return SQLMessageRepository(session)
 
 def get_user_repository(session: Session = Depends(get_db_session)) -> IUserRepository:

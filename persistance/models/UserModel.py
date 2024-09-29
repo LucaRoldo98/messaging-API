@@ -12,5 +12,5 @@ class UserModel(Base):
     sent_messages = relationship("MessageModel", back_populates="sender", foreign_keys="[MessageModel.sender_id]", order_by="MessageModel.timestamp.desc()")
     received_messages = relationship("MessageModel", back_populates="recipient", foreign_keys="[MessageModel.recipient_id]", order_by="MessageModel.timestamp.desc()")
     
-    def toData(self):
+    def toData(self) -> UserData:
         return UserData(id=self.id, email=self.email)

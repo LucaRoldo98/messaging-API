@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from dataClasses.UserData import UserData
 
 class UserCreateSchema(BaseModel):
     email: EmailStr
@@ -10,8 +11,8 @@ class UserResponseSchema(BaseModel):
 class UserDeleteResponseSchema(BaseModel):
     detail : str
 
-def userDataToSchema(user_data) -> UserResponseSchema:
+def userDataToSchema(userData: UserData) -> UserResponseSchema:
     return UserResponseSchema(
-        id=user_data.id,
-        email=user_data.email
+        id=userData.id,
+        email=userData.email
     )
