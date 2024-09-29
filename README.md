@@ -45,7 +45,7 @@ It follows a **repository-service-controller pattern** for separation of concern
     ```bash
     python3 main.py
     ```
-
+    The application will be then avaliable at `http://127.0.0.1:8000/`
 5. **Access API Documentation**:
     Open your browser and navigate to:
     ```
@@ -116,19 +116,19 @@ It follows a **repository-service-controller pattern** for separation of concern
       ```
     The API will raise a 404 HTTPException if none of the specified messagesID matches a message in the database, otherwise it will return a message specifying the number of messages deleted. 
 
-9. **Get User by ID**:
+7. **Get User by ID**:
     Fetches a user by their userID.
     - Method: `GET`
     - Endpoint: `/user/id/{userID}`
     The API will raise a 404 HTTPException if the user with the specified userID does not exist in the database.
   
-10. **Get User by email**:
+8. **Get User by email**:
     Fetches a user by their email address.
     - Method: `GET`
     - Endpoint: `/user/email/{email}`
     The API will raise a 404 HTTPException if the user with the specified email does not exist in the database.
   
-11. **Delete User by ID**:
+9. **Delete User by ID**:
     Deletes a user by their userID.
     - **Method**: `DELETE`
     - **Endpoint**: `/user/{userID}`

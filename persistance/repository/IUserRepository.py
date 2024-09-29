@@ -31,7 +31,7 @@ class IUserRepository(ABC):
     @abstractmethod
     def getReceivedMessages(self, userID: str) -> Optional[List[MessageData]]:
         """
-        Get all messages given the userID. 
+        Get all received messages given the userID. 
         Returns None if the user with the specified ID does not exist.
         """
         raise NotImplementedError
