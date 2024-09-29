@@ -3,15 +3,15 @@
 ## Project Overview
 
 This project is a simple messaging API that allows users to send and retrieve messages.
-The API built in Python using **FastAPI** and **SQLAlchemy**, as well as **pydantic** for data validation. The API stores messages and users in a **SQLite** database.
-It follows a **repository-service-controller pattern** for separation of concerns between the business logic, data access, and controller layers.
-
+The API is built in Python using **FastAPI** and **SQLAlchemy**, as well as **pydantic** for data validation. The API stores messages and users in a **SQLite** database.
+It follows a **repository-service-controller pattern** for separation of concerns between data access, business logic, and controller layers.
 
 ### Core Features
 
 - Users can register with an email address.
 - Messages can be submitted between registered users by specifying the sender, the recipient and the text.
-- Messages can be retrieved, both as unread messages and as paginated messages (with a start and stop index), sorted by decreasing time order.
+- All unread messages for a specific user can be retrieved, sorted by decreasing time order.
+- All messages for a specific user can be retrieved, with the optional pagination (start and stop index), sorted by decreasing time order.
 - Messages can be deleted, both one by one or with a bulk operation.
 
 ## Project Structure
