@@ -32,7 +32,7 @@ It follows a **repository-service-controller pattern** for separation of concern
 
 2. **Create a Virtual Environment**:
     ```bash
-    python -m venv venv
+    python3 -m venv venv
     source venv/bin/activate
     ```
 
