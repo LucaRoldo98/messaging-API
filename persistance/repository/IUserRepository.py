@@ -13,10 +13,18 @@ class IUserRepository(ABC):
         raise NotImplementedError
     
     @abstractmethod
-    def get(self, userID: str) -> Optional[UserData]:
+    def getByID(self, userID: str) -> Optional[UserData]:
         """
         Gets user data given its ID.
         Returns None if the user with the specified ID does not exist.
+        """
+        raise NotImplementedError
+   
+    @abstractmethod
+    def getByEmail(self, email: str) -> Optional[UserData]:
+        """
+        Gets user data given its email.
+        Returns None if the user with the specified email does not exist.
         """
         raise NotImplementedError
     

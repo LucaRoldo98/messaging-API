@@ -13,11 +13,11 @@ class MessageService:
         self._userRepository = userRepository
         
     def submitMessage(self, message: MessageData) -> Optional[MessageData]:
-        sender = self._userRepository.get(message.sender)
+        sender = self._userRepository.getByID(message.sender)
         if not sender:
             return None
 
-        recipient = self._userRepository.get(message.recipient)
+        recipient = self._userRepository.getByID(message.recipient)
         if not recipient:
             return None
 

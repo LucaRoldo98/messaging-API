@@ -13,8 +13,11 @@ class UserService:
     def createUser(self, user: UserData) -> UserData:
         return self._userRepository.create(user)
     
-    def getUser(self, userID: str) -> Optional[UserData]:
-        return self._userRepository.get(userID)
+    def getUserByID(self, userID: str) -> Optional[UserData]:
+        return self._userRepository.getByID(userID)
+    
+    def getUserByEmail(self, email: str) -> Optional[UserData]:
+        return self._userRepository.getByEmail(email)
                 
     def deleteUser(self, userID: str):
         return self._userRepository.delete(userID)

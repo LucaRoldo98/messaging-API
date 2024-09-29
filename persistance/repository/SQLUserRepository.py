@@ -22,8 +22,14 @@ class SQLUserRepository(IUserRepository):
         self.session.commit()
         return db_user.toData()
         
-    def get(self, userID: str) -> Optional[UserData]:
+    def getByID(self, userID: str) -> Optional[UserData]:
         db_user = self.session.query(UserModel).filter(UserModel.id == userID).first()
+        if db_user is None:
+            return None
+        return db_user.toData()
+    
+    def getByEmail(self, email: str) -> Optional[UserData]:
+        db_user = self.session.query(UserModel).filter(UserModel.email == email).first()
         if db_user is None:
             return None
         return db_user.toData()
