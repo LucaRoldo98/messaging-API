@@ -66,7 +66,7 @@ It follows a **repository-service-controller pattern** for separation of concern
         "email": "user@example.com"
       }
       ```
-    This registers a user with the provided email address. The API will raise a HTTPException if a users already exists with the same email.
+    This registers a user with the provided email address. The API will raise a 409 HTTPException if a users already exists with the same email.
 
 2. **Send a message**:
 
