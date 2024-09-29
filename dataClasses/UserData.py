@@ -9,12 +9,11 @@ class UserData:
     
     def __init__(self,
                  email : str,
-                 id: Optional[str] = None,
+                 id: Optional[str] = None
                  ):
 
         self.id = id
         self.email = email
-        self.received_messages = []
                 
     def __repr__(self) -> str:
         return (

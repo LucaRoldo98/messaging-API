@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
 from dataClasses.UserData import UserData
-
 class IUserRepository(ABC):
     @abstractmethod
     def create(self, user: UserData) -> Optional[UserData]:
@@ -19,7 +18,7 @@ class IUserRepository(ABC):
         Returns None if the user with the specified ID does not exist.
         """
         raise NotImplementedError
-    
+
     @abstractmethod
     def update(self, userID: str, newEmail: str) -> Optional[UserData]:
         """

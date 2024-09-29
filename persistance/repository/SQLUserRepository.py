@@ -2,7 +2,8 @@ from persistance.repository.IUserRepository import IUserRepository
 from persistance.models.models import UserModel
 from sqlalchemy.orm import Session
 from dataClasses.UserData import UserData
-from typing import Optional
+from dataClasses.MessageData import MessageData
+from typing import Optional, List
 
 class SQLUserRepository(IUserRepository):
     session: Session
@@ -19,15 +20,15 @@ class SQLUserRepository(IUserRepository):
             )
         self.session.add(db_user)
         self.session.commit()
-        return self._userModelToData(db_user)
+        return db_user.toData()
         
     def get(self, userID: str) -> Optional[UserData]:
         db_user = self.session.query(UserModel).filter(UserModel.id == userID).first()
         if db_user is None:
             return None
-        return self._userModelToData(db_user)
+        return db_user.toData()
             
-    def update(self, userID: str, newEmail: str) -> UserData:
+    def update(self, userID: str, newEmail: str) -> Optional[UserData]:
         db_user = self.session.query(UserModel).filter(
             UserModel.id == userID
         ).first()
@@ -37,7 +38,7 @@ class SQLUserRepository(IUserRepository):
         
         db_user.email = newEmail
         self.session.commit()
-        return self._userModelToData(db_user)
+        return db_user.toData()
 
 
     def delete(self, userID: str) -> int:
@@ -46,9 +47,3 @@ class SQLUserRepository(IUserRepository):
             return False
         self.session.commit()
         return True
-    
-    def _userModelToData(self, user: UserModel) -> UserData:
-        return UserData(
-            id=user.id,
-            email=user.email
-        )

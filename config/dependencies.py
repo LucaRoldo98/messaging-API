@@ -1,4 +1,4 @@
-from persistance.repository.IMessageRepository import IUserRepository
+from persistance.repository.IMessageRepository import IMessageRepository
 from persistance.repository.SQLMessageRepository import SQLMessageRepository
 from persistance.repository.IUserRepository import IUserRepository
 from persistance.repository.SQLUserRepository import SQLUserRepository

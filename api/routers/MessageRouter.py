@@ -9,10 +9,8 @@ messageRouter = APIRouter(prefix="/messages")
 @messageRouter.post("/", response_model=MessageResponseSchema, status_code=status.HTTP_201_CREATED)
 async def submit_message(message: MessagePostRequestSchema, service: MessageService = Depends()):
     messageData = service.submitMessage(MessageData(**message.model_dump()))
-    if messageData.sender is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User {message.sender} doesn't exist")
-    if messageData.recipient is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User {message.recipient} doesn't exist")
+    if messageData is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Sender or recipient doesn't exist")
     return messageDataToSchema(messageData)
 
 @messageRouter.get("/unread/{user}", response_model=List[MessageResponseSchema])
