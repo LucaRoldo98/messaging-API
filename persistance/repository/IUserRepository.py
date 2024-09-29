@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
 from dataClasses.UserData import UserData
+from dataClasses.MessageData import MessageData
 class IUserRepository(ABC):
     @abstractmethod
     def create(self, user: UserData) -> Optional[UserData]:
@@ -18,7 +19,12 @@ class IUserRepository(ABC):
         Returns None if the user with the specified ID does not exist.
         """
         raise NotImplementedError
-
+    def getReceivedMessages(self, userID: str) -> Optional[List[MessageData]]:
+        """
+        Get all messages given the userID
+        """
+        raise NotImplementedError
+    
     @abstractmethod
     def update(self, userID: str, newEmail: str) -> Optional[UserData]:
         """

@@ -2,7 +2,8 @@ from persistance.repository.IUserRepository import IUserRepository
 from persistance.models.UserModel import UserModel
 from sqlalchemy.orm import Session
 from dataClasses.UserData import UserData
-from typing import Optional
+from dataClasses.MessageData import MessageData
+from typing import Optional, List
 
 class SQLUserRepository(IUserRepository):
     session: Session
@@ -26,6 +27,16 @@ class SQLUserRepository(IUserRepository):
         if db_user is None:
             return None
         return db_user.toData()
+    
+    def getReceivedMessages(self, userID: str) -> Optional[List[MessageData]]:
+        user = self.session.query(UserModel).filter(UserModel.id == userID).first()
+
+        if user is None:
+            return None
+
+        receivedMessages = user.received_messages
+        return [msg.toData() for msg in receivedMessages]
+
             
     def update(self, userID: str, newEmail: str) -> Optional[UserData]:
         db_user = self.session.query(UserModel).filter(
