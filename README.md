@@ -56,7 +56,8 @@ It follows a **repository-service-controller pattern** for separation of concern
 ## How the API Works
 
 1. **Create a user**:
-    Before creating or sending messages, you need to create a user by specifying its email:
+
+    Before creating or sending messages, you need to create a user by specifying its email.
     - Method: `POST`
     - Endpoint: `/user/`
     - Payload:
@@ -65,10 +66,13 @@ It follows a **repository-service-controller pattern** for separation of concern
         "email": "user@example.com"
       }
       ```
-    This registers a user with the provided email address. The API will raise a HTTPException if an users already exists with the same email.
+    This registers a user with the provided email address. The API will raise a HTTPException if a users already exists with the same email.
 
 2. **Send a message**:
+
     To send a message, the sender and recipient must both be registered users.
+    You must specify the senderID and recipientID to send a message. The userID is provided as response from the create user endpoint. To retrieve it again, you can call the GET `/user/email/{email}` endpoint, and the API will provide you the userID. 
+
     - Method: `POST`
     - Endpoint: `/messages/`
     - Payload:
@@ -79,16 +83,18 @@ It follows a **repository-service-controller pattern** for separation of concern
         "text": "string"
       }
       ```
-      The userID is provided as response from the create user endpoint. To retrieve it again, you can call the GET `/user/email/{email}` endpoint, and the API will provide you the userID. The API will raise a 404 HTTPException if the user with the specified senderID and/or recipentID does not exist in the database.
+      The API will raise a 404 HTTPException if the user with the specified senderID and/or recipentID does not exist in the database.
 
 3. **Fetch new messages**:
-    Retrieve all unread messages by recipient ID:
+
+    Retrieve all unread messages by recipient ID.
     - Method: `GET`
     - Endpoint: `/messages/unread/{userID}`
     Messages are returned in descending time order (most recent first). The API will raise a 404 HTTPException if the user with the specified userID does not exist in the database.
   
 4. **Fetching all messages (with pagination)**:
-    Retrieve messages by recipient ID. Optionally, you can specify a start and/or stop index, to retrieve the messages within the specified index range:
+
+    Retrieve messages by recipient ID. Optionally, you can specify a start and/or stop index, to retrieve the messages within the specified index range.
     - Method: `GET`
     - Endpoint: `/messages/{userID}`
 
@@ -98,13 +104,15 @@ It follows a **repository-service-controller pattern** for separation of concern
    Messages are returned in descending time order (most recent first). The API will raise a 404 HTTPException if the user with the specified userID does not exist in the database.
 
 5. **Delete a single message**:
-    Delete a message by specifying the messageID:
+
+    Delete a message by specifying the messageID.
     - Method: `DELETE`
     - Endpoint: `/messages/{messageID}`
     The API will raise a 404 HTTPException if the messageID does not match any message in the database. 
 
 6. **Delete multiple messages**:
-    Bulk deletes messages.
+
+    Bulk deletes messages, by specifying a list of messagesID.
    
     - Method: `DELETE`
     - Endpoint: `/messages/`
@@ -117,18 +125,21 @@ It follows a **repository-service-controller pattern** for separation of concern
     The API will raise a 404 HTTPException if none of the specified messagesID matches a message in the database, otherwise it will return a message specifying the number of messages deleted. 
 
 7. **Get User by ID**:
+
     Fetches a user by their userID.
     - Method: `GET`
     - Endpoint: `/user/id/{userID}`
     The API will raise a 404 HTTPException if the user with the specified userID does not exist in the database.
   
 8. **Get User by email**:
+
     Fetches a user by their email address.
     - Method: `GET`
     - Endpoint: `/user/email/{email}`
     The API will raise a 404 HTTPException if the user with the specified email does not exist in the database.
   
-9. **Delete User by ID**:
+9.  **Delete User by ID**:
+
     Deletes a user by their userID.
     - **Method**: `DELETE`
     - **Endpoint**: `/user/{userID}`
