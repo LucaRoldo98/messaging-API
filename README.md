@@ -38,7 +38,7 @@ It follows a **repository-service-controller pattern** for separation of concern
 
 3. **Install Dependencies**:
     ```bash
-    pip install -r requirements.txt
+    pip3 install -r requirements.txt
     ```
 
 4. **Run the Application**:
