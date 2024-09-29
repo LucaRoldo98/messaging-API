@@ -20,8 +20,8 @@ class MessageModel(Base):
     
     def toData(self) -> MessageData:
         return MessageData(id=self.id, 
-                           sender=self.sender_id, 
-                           recipient=self.recipient_id, 
+                           senderID=self.sender_id, 
+                           recipientID=self.recipient_id, 
                            text=self.text, 
                            timestamp=self.timestamp,
                            is_fetched=self.is_fetched)

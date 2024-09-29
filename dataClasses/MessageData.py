@@ -9,16 +9,16 @@ class MessageData:
     """
     
     def __init__(self,
-                 sender: Optional[str],
-                 recipient: Optional[str],
+                 senderID: Optional[str],
+                 recipientID: Optional[str],
                  text: str,
                  id: Optional[str] = None,
                  timestamp: Optional[datetime] = None,
                  is_fetched: Optional[bool] = False):
 
         self.id = id
-        self.recipient = recipient
-        self.sender = sender
+        self.recipientID = recipientID
+        self.senderID = senderID
         self.text = text
         self.timestamp = timestamp
         self.is_fetched = is_fetched
@@ -26,8 +26,8 @@ class MessageData:
     def __repr__(self) -> str:
         return (
             f"""Message with id={self.id}, 
-            sender={self.sender}, 
-            recipient={self.recipient}, 
+            senderID={self.senderID}, 
+            recipientID={self.recipientID}, 
             text={self.text}, 
             timestamp={self.timestamp}, 
             is_fetched={self.is_fetched}"""

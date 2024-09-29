@@ -12,8 +12,8 @@ class SQLMessageRepository(IMessageRepository):
         
     def create(self, message: MessageData) -> MessageData:
         db_message = MessageModel(
-            sender_id = message.sender,
-            recipient_id = message.recipient,
+            sender_id = message.senderID,
+            recipient_id = message.recipientID,
             text = message.text
             )
         self.session.add(db_message)

@@ -5,14 +5,14 @@ from dataClasses.MessageData import MessageData
 
 class MessageResponseSchema(BaseModel):
     id: str
-    recipient : str
-    sender : str
+    recipientID : str
+    senderID : str
     text : str
     timestamp: datetime
 
 class MessagePostRequestSchema(BaseModel):
-    recipient : str
-    sender : str
+    recipientID : str
+    senderID : str
     text : str
     
 class MessagesDeleteRequestSchema(BaseModel):
@@ -24,8 +24,8 @@ class MessageDeleteResponseSchema(BaseModel):
 def messageDataToSchema(messageData: MessageData) -> MessageResponseSchema:
     return MessageResponseSchema(
             id=messageData.id,
-            recipient=messageData.recipient,
-            sender=messageData.sender,
+            recipientID=messageData.recipientID,
+            senderID=messageData.senderID,
             text=messageData.text,
             timestamp=messageData.timestamp,
             is_fetched=messageData.is_fetched
