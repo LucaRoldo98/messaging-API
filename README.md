@@ -90,6 +90,7 @@ It follows a **repository-service-controller pattern** for separation of concern
     Retrieve all unread messages by recipient ID.
     - Method: `GET`
     - Endpoint: `/messages/unread/{userID}`
+
     Messages are returned in descending time order (most recent first). The API will raise a 404 HTTPException if the user with the specified userID does not exist in the database.
   
 4. **Fetching all messages (with pagination)**:
@@ -101,6 +102,7 @@ It follows a **repository-service-controller pattern** for separation of concern
    Query Parameters (Optional):
     - **startIndex**: Start index of the messages to retrieve.
     - **stopIndex**: End index of the messages to retrieve.
+
    Messages are returned in descending time order (most recent first). The API will raise a 404 HTTPException if the user with the specified userID does not exist in the database.
 
 5. **Delete a single message**:
@@ -108,6 +110,7 @@ It follows a **repository-service-controller pattern** for separation of concern
     Delete a message by specifying the messageID.
     - Method: `DELETE`
     - Endpoint: `/messages/{messageID}`
+
     The API will raise a 404 HTTPException if the messageID does not match any message in the database. 
 
 6. **Delete multiple messages**:
@@ -129,6 +132,7 @@ It follows a **repository-service-controller pattern** for separation of concern
     Fetches a user by their userID.
     - Method: `GET`
     - Endpoint: `/user/id/{userID}`
+
     The API will raise a 404 HTTPException if the user with the specified userID does not exist in the database.
   
 8. **Get User by email**:
@@ -136,6 +140,7 @@ It follows a **repository-service-controller pattern** for separation of concern
     Fetches a user by their email address.
     - Method: `GET`
     - Endpoint: `/user/email/{email}`
+
     The API will raise a 404 HTTPException if the user with the specified email does not exist in the database.
   
 9.  **Delete User by ID**:
@@ -143,6 +148,7 @@ It follows a **repository-service-controller pattern** for separation of concern
     Deletes a user by their userID.
     - **Method**: `DELETE`
     - **Endpoint**: `/user/{userID}`
+
    The API will raise a 404 HTTPException if the user with the specified userID does not exist in the database.
 
 ## Notes
