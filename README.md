@@ -137,4 +137,4 @@ It follows a **repository-service-controller pattern** for separation of concern
 ## Notes
 
 The system requires a user to be created before it can send/receive any message.
-When sending a message, both `sender_id` and `recipient_id` must be valid user IDs. 
+When sending a message, both `senderID` and `recipientID` must be valid user IDs. 
