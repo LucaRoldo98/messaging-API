@@ -4,7 +4,14 @@ from persistance.repository.IUserRepository import IUserRepository
 from persistance.repository.SQLUserRepository import SQLUserRepository
 from sqlalchemy.orm import Session
 from fastapi import Depends
-from config.database import get_db_session
+from config.database import SessionLocal
+
+def get_db_session():
+    session = SessionLocal()
+    try:
+        yield session
+    finally:
+        session.close()
 
 def get_message_repository(session: Session = Depends(get_db_session)) -> IUserRepository:
     return SQLMessageRepository(session)

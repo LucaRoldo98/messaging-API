@@ -26,7 +26,7 @@ def messageDataToSchema(messageData: MessageData) -> MessageResponseSchema:
             id=messageData.id,
             recipient=messageData.recipient,
             sender=messageData.sender,
-            message=messageData.message,
+            message=messageData.text,
             timestamp=messageData.timestamp,
             is_fetched=messageData.is_fetched
         )

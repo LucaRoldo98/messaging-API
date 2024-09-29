@@ -11,7 +11,7 @@ class MessageModel(Base):
     id = Column(String(128), default=lambda: uuid.uuid4().hex, nullable=False, primary_key=True, index=True)
     sender_id = Column(String(128), ForeignKey('users.id'), nullable=False)
     recipient_id = Column(String(128), ForeignKey('users.id'), nullable=False)
-    message = Column(Text, nullable=False)
+    text = Column(Text, nullable=False)
     timestamp = Column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
     is_fetched = Column(Boolean, default=False)
     
@@ -22,6 +22,6 @@ class MessageModel(Base):
         return MessageData(id=self.id, 
                            sender=self.sender_id, 
                            recipient=self.recipient_id, 
-                           message=self.message, 
+                           text=self.text, 
                            timestamp=self.timestamp,
                            is_fetched=self.is_fetched)

@@ -14,14 +14,14 @@ class SQLMessageRepository(IMessageRepository):
         db_message = MessageModel(
             sender_id = message.sender,
             recipient_id = message.recipient,
-            message = message.message
+            message = message.text
             )
         self.session.add(db_message)
         self.session.commit()
         return db_message.toData()
         
-    def get(self, user: str, isFetched: Optional[bool] = None, startIndex: Optional[int] = None, stopIndex: Optional[int] = None) -> Optional[List[MessageData]]:
-        query = self.session.query(MessageModel).filter(MessageModel.recipient == user).order_by(MessageModel.timestamp.desc())
+    def get(self, recipientID: str, isFetched: Optional[bool] = None, startIndex: Optional[int] = None, stopIndex: Optional[int] = None) -> Optional[List[MessageData]]:
+        query = self.session.query(MessageModel).filter(MessageModel.recipient == recipientID).order_by(MessageModel.timestamp.desc())
         
         if query.first() is None:
             return None

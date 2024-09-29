@@ -1,10 +1,9 @@
 from fastapi import APIRouter, HTTPException, Depends, status
-from typing import List
 from services.UserService import UserService
 from dataClasses.UserData import UserData
 from api.schemas.UserSchemas import UserResponseSchema, UserCreateSchema, UserDeleteResponseSchema, userDataToSchema
 
-userRouter = APIRouter(prefix="/users")
+userRouter = APIRouter(prefix="/user")
 
 @userRouter.post("/", response_model=UserResponseSchema, status_code=status.HTTP_201_CREATED)
 async def create_user(user: UserCreateSchema, service: UserService = Depends()):
@@ -15,13 +14,6 @@ async def create_user(user: UserCreateSchema, service: UserService = Depends()):
 
 @userRouter.get("/{userID}", response_model=UserResponseSchema)
 async def get_user(userID: str, service: UserService = Depends()):
-    user = service.getUser(userID)
-    if user is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with ID {userID} does not exist")
-    return userDataToSchema(user)
-
-@userRouter.get("/{userID}/unread", response_model=UserResponseSchema)
-async def get_unread_messages(userID: str, service: UserService = Depends()):
     user = service.getUser(userID)
     if user is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with ID {userID} does not exist")
