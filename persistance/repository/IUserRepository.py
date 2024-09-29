@@ -20,6 +20,7 @@ class IUserRepository(ABC):
         """
         raise NotImplementedError
     
+    @abstractmethod
     def getReceivedMessages(self, userID: str) -> Optional[List[MessageData]]:
         """
         Get all messages given the userID. 
