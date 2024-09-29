@@ -14,7 +14,7 @@ class SQLMessageRepository(IMessageRepository):
         db_message = MessageModel(
             sender_id = message.sender,
             recipient_id = message.recipient,
-            message = message.text
+            text = message.text
             )
         self.session.add(db_message)
         self.session.commit()
