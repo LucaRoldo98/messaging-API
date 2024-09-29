@@ -11,7 +11,7 @@ It follows a **repository-service-controller pattern** for separation of concern
 
 - Users can register with an email address.
 - Messages can be submitted between registered users by specifying the sender, the recipient and the text.
-- Messages can be retrieved, both as unread messages and paginated messages (with a start and stop index), sorted by decreasing time order.
+- Messages can be retrieved, both as unread messages and as paginated messages (with a start and stop index), sorted by decreasing time order.
 - Messages can be deleted, both one by one or with a bulk operation.
 
 ## Project Structure
