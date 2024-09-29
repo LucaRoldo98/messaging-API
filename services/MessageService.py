@@ -12,16 +12,8 @@ class MessageService:
         self._messageRepository = messageRepository
         self._userRepository = userRepository
         
-    def submitMessage(self, message: MessageData) -> Optional[MessageData]:
-        sender = self._userRepository.getByID(message.sender)
-        if not sender:
-            return None
-
-        recipient = self._userRepository.getByID(message.recipient)
-        if not recipient:
-            return None
-
-        return self._messageRepository.create(message)            
+    def submitMessage(self, message: MessageData) -> MessageData:
+        return self._messageRepository.create(message)
     
     def getUnreadMessages(self, userID: str) -> Optional[List[MessageData]]:
         receivedMessages = self._userRepository.getReceivedMessages(userID)
