@@ -47,7 +47,7 @@ It follows a **repository-service-controller pattern** for separation of concern
     ```
     The application will be then avaliable at `http://127.0.0.1:8000/`
 5. **Access API Documentation**:
-6. 
+
     Open your browser and navigate to:
     ```
     http://127.0.0.1:8000/docs
