@@ -7,13 +7,13 @@ class MessageResponseSchema(BaseModel):
     id: str
     recipient : str
     sender : str
-    message : str
+    text : str
     timestamp: datetime
 
 class MessagePostRequestSchema(BaseModel):
     recipient : str
     sender : str
-    message : str
+    text : str
     
 class MessagesDeleteRequestSchema(BaseModel):
     messagesID: List[str]
@@ -26,7 +26,7 @@ def messageDataToSchema(messageData: MessageData) -> MessageResponseSchema:
             id=messageData.id,
             recipient=messageData.recipient,
             sender=messageData.sender,
-            message=messageData.text,
+            text=messageData.text,
             timestamp=messageData.timestamp,
             is_fetched=messageData.is_fetched
         )
