@@ -1,9 +1,8 @@
 from persistance.repository.IUserRepository import IUserRepository
-from persistance.models.models import UserModel
+from persistance.models.UserModel import UserModel
 from sqlalchemy.orm import Session
 from dataClasses.UserData import UserData
-from dataClasses.MessageData import MessageData
-from typing import Optional, List
+from typing import Optional
 
 class SQLUserRepository(IUserRepository):
     session: Session

@@ -1,5 +1,5 @@
 from persistance.repository.IMessageRepository import IMessageRepository
-from persistance.models.models import MessageModel
+from persistance.models.MessageModel import MessageModel
 from sqlalchemy.orm import Session
 from dataClasses.MessageData import MessageData
 from typing import Optional, List

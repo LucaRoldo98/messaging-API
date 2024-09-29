@@ -4,7 +4,6 @@ from config.database import Base
 import datetime
 import uuid
 from dataClasses.MessageData import MessageData
-from dataClasses.UserData import UserData
 
 class MessageModel(Base):
     __tablename__ = "messages"
@@ -26,14 +25,3 @@ class MessageModel(Base):
                            message=self.message, 
                            timestamp=self.timestamp,
                            is_fetched=self.is_fetched)
-    
-class UserModel(Base):
-    __tablename__ = "users"
-    
-    id = Column(String(128), default=lambda: uuid.uuid4().hex, nullable=False, primary_key=True, index=True)
-    email = Column(String(100), unique=True, nullable=False)
-    sent_messages = relationship("MessageModel", back_populates="sender", foreign_keys="[MessageModel.sender_id]")
-    received_messages = relationship("MessageModel", back_populates="recipient", foreign_keys="[MessageModel.recipient_id]")
-    
-    def toData(self):
-        return UserData(id=self.id, email=self.email, received_messages=self.received_messages)
