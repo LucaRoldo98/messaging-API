@@ -95,7 +95,7 @@ It follows a **repository-service-controller pattern** for separation of concern
   
 4. **Fetching all messages (with pagination)**:
 
-    Retrieve messages by recipient ID. Optionally, you can specify a start and/or stop index, to retrieve the messages within the specified index range.
+    Retrieve all messages by recipient ID. Optionally, you can specify a start and/or stop index, to retrieve the messages within the specified index range.
     - Method: `GET`
     - Endpoint: `/messages/{userID}`
 
