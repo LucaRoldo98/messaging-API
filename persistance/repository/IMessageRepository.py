@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
 from dataClasses.MessageData import MessageData
 from typing import List, Optional
-class IRepository(ABC):
+
+class IMessageRepository(ABC):
     @abstractmethod
     def create(self, message: MessageData) -> MessageData:
         """
@@ -11,9 +12,9 @@ class IRepository(ABC):
         raise NotImplementedError
     
     @abstractmethod
-    def get(self, user: str, isFetched: Optional[bool], startIndex: Optional[int], stopIndex: Optional[int]) -> Optional[List[MessageData]]:
+    def get(self, recipientID: str, isFetched: Optional[bool], startIndex: Optional[int], stopIndex: Optional[int]) -> Optional[List[MessageData]]:
         """
-        Gets messages for given user, sorted by descending timestamp.
+        Gets messages for given recipientID, sorted by descending timestamp.
         The method can take some optional filters:
         - isFetched: Get only messages with the speficified fetched status.
         - startIndex: Get results starting from specified index. Default value is 0.

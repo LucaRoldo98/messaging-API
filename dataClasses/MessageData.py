@@ -9,8 +9,8 @@ class MessageData:
     """
     
     def __init__(self,
-                 sender: str,
-                 recipient: str,
+                 sender: Optional[str],
+                 recipient: Optional[str],
                  text: str,
                  id: Optional[str] = None,
                  timestamp: Optional[datetime] = None,

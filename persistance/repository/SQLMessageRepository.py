@@ -1,10 +1,10 @@
-from persistance.repository.IRepository import IRepository
-from persistance.model.MessageModel import MessageModel
+from persistance.repository.IMessageRepository import IMessageRepository
+from persistance.models.MessageModel import MessageModel
 from sqlalchemy.orm import Session
 from dataClasses.MessageData import MessageData
 from typing import Optional, List
 
-class SQLRepository(IRepository):
+class SQLMessageRepository(IMessageRepository):
     session: Session
     
     def __init__(self, session: Session):
@@ -12,16 +12,16 @@ class SQLRepository(IRepository):
         
     def create(self, message: MessageData) -> MessageData:
         db_message = MessageModel(
-            sender = message.sender,
-            recipient = message.recipient,
+            sender_id = message.sender,
+            recipient_id = message.recipient,
             text = message.text
             )
         self.session.add(db_message)
         self.session.commit()
         return db_message.toData()
         
-    def get(self, user: str, isFetched: Optional[bool] = None, startIndex: Optional[int] = None, stopIndex: Optional[int] = None) -> Optional[List[MessageData]]:
-        query = self.session.query(MessageModel).filter(MessageModel.recipient == user).order_by(MessageModel.timestamp.desc())
+    def get(self, recipientID: str, isFetched: Optional[bool] = None, startIndex: Optional[int] = None, stopIndex: Optional[int] = None) -> Optional[List[MessageData]]:
+        query = self.session.query(MessageModel).filter(MessageModel.recipient == recipientID).order_by(MessageModel.timestamp.desc())
         
         if query.first() is None:
             return None
@@ -46,8 +46,8 @@ class SQLRepository(IRepository):
         
         if newFetchedStatus is not None:
             for db_message in db_messages:
-                db_message.is_fetched = newFetchedStatus
-                
+                db_message.is_fetched = newFetchedStatus    
+                          
         self.session.commit()
         return [msg.toData() for msg in db_messages]
 
